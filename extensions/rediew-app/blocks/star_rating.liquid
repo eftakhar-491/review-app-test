@@ -1,0 +1,38 @@
+{% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
+
+
+
+<span style="color:{{ block.settings.colour }}">
+  HELLO WORLD {{ block.settings.text }}
+
+  <input type="text" name="comment" placeholder="Write your comment" />
+  <button onclick="getRivew()">Submit</button>
+
+  {% render 'stars', rating: avg_rating %}
+</span>
+{% if avg_rating >= 4 %}
+  <br>
+  <img src="{{ "thumbs-up.png" | asset_img_url: '15x' }}" height="15" width="15" loading="lazy">
+  {{ 'ratings.home.recommendationText' | t }}
+{% endif %}
+<script>
+  function getRivew() {
+
+    fetch('https://dummyjson.com/products')
+    .then(response => response.json())
+    .then(data => console.log("Thank you for your review!", data));
+    
+  }
+</script>
+{% schema %}
+{
+  "name": "Star Rating",
+  "target": "section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "product", "autofill": true },
+    { "type": "color", "id": "colour", "label": "Star Colour", "default": "#ff0000" },
+    { "type": "text", "id": "text", "label": "Star Colour sdaf", "default": "dasasg asg" },
+  ]
+}
+{% endschema %}
+
